@@ -9,7 +9,7 @@
     Título Máster:  Máster Universitario en Desarrollo de sitios y aplicaciones Web
     Proyecto:       TFM - Sistema de Gestión de Expedientes Digitales (GSXPD)
     Fecha creación: 01/03/2026
-    Última modif.:  10/04/2026
+    Última modif.:  17/05/2026
 
     Detalles:
       - Crea la instancia principal de la aplicación NestJS.
@@ -25,13 +25,17 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: 'http://localhost:4200',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus: 204
-  });
+  origin: [
+    'https://gsxpd-frontend.vercel.app',
+    'http://localhost:4200'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+});
+
 
   await app.listen(3000);
 }
