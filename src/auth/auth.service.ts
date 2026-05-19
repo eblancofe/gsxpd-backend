@@ -11,7 +11,7 @@
  *  Proyecto:       TFM - Sistema de Gestión de Expedientes Digitales (GSXPD)
  *
  *  Fecha creación: 07/03/2026
- *  Última modif.:  08/04/2026
+ *  Última modif.:  19/05/2026
  *
  *  Detalles:
  *  - Utiliza UsersService para obtener usuarios desde la base de datos.
@@ -32,10 +32,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string) {
-    const user = await this.usersService.findByUsername(username);
-    //console.log('Usuario encontrado:', user);
-    //console.log('isActive:', user.isActive);
+  async validateUser(username: string, pass: string) {    
+	username = username.toLowerCase(); //El usuario se convierte a minúsculas
+	const user = await this.usersService.findByUsername(username);
 
     if (!user) throw new UnauthorizedException('Usuario no encontrado');
 

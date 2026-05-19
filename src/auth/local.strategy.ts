@@ -8,7 +8,7 @@
  *  Título Máster:  Máster Universitario en Desarrollo de sitios y aplicaciones Web
  *  Proyecto:       TFM - Sistema de Gestión de Expedientes Digitales (GSXPD)
  *  Fecha creación: 07/03/2026
- *  Última modif.:  16/05/2026
+ *  Última modif.:  19/05/2026
  *
  *  Detalles:
  *    - Extiende PassportStrategy para implementar la estrategia Local.
@@ -31,10 +31,11 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   async validate(username: string, password: string) {
    try {
-    const user = await this.authService.validateUser(username, password);
+    username = username.toLowerCase(); //convertimos usuario en minúsculas
+	const user = await this.authService.validateUser(username, password);
     return user;
 	} catch (error) {
 		throw new UnauthorizedException(error.message || 'Credenciales inválidas');
+    }
   }
-}
 }

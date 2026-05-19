@@ -12,7 +12,7 @@
  *                  (GSXPD)
  *
  *  Fecha creación: 07/03/2026
- *  Última modif.:  10/04/2026
+ *  Última modif.:  19/05/2026
  *
  *  Detalles:
  *    - Implementa búsqueda paginada mediante ILike() sobre username y email.
@@ -53,6 +53,7 @@ export class UsersService {
 
   //Buscar usuario por username (para login)
   async findByUsername(username: string): Promise<User | null> {
+	  username = username.toLowerCase(); //usuario en minúsculas
 	  const user = await this.userRepository.findOne({ where: { username } });
 	  return user ?? null;
 	}
@@ -62,7 +63,7 @@ export class UsersService {
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const newUser = this.userRepository.create({
-      username: data.username,
+      username: data.username.toLowerCase(), //se guarda el usuario en minúsculas
       password: hashedPassword,
       email: data.email,
       role: data.role ?? 'lectura',
@@ -89,7 +90,7 @@ export class UsersService {
 
 	  // Si el username viene y es distinto, actualizar
 	  if (data.username !== undefined && data.username !== user.username) {
-		user.username = data.username;
+		user.username = data.username.toLowerCase(); //usuario en minúsculas
 	  }
 
 	  if (data.email !== undefined && data.email !== user.email) {
